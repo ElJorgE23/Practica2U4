@@ -11,16 +11,32 @@ import androidx.compose.runtime.saveable.rememberSaveable
 
 @Composable
 fun WaterCounter(modifier: Modifier = Modifier) {
+    // Maneja el estado del conteo
+    var count by rememberSaveable { mutableStateOf(0) }
+
     Column(modifier = modifier.padding(16.dp)) {
-        var count by rememberSaveable { mutableStateOf(0) }
+        // Usa StatelessCounter y pasa el conteo y la función para incrementar
+        StatelessCounter(count = count, onIncrement = { count++ })
+
+        // Botón para reiniciar el conteo a cero
+        Button(onClick = { count = 0 }, Modifier.padding(top = 8.dp)) {
+            Text("Clear count")
+        }
+    }
+}
+
+@Composable
+fun StatelessCounter(count: Int, onIncrement: () -> Unit, modifier: Modifier = Modifier) {
+    Column(modifier = modifier.padding(16.dp)) {
         if (count > 0) {
             Text("You've had $count glasses.")
         }
-        Button(onClick = { count++ }, Modifier.padding(top = 8.dp), enabled = count < 10) {
+        Button(onClick = onIncrement, Modifier.padding(top = 8.dp), enabled = count < 10) {
             Text("Add one")
         }
     }
 }
+
 @Composable
 fun WellnessTaskItem(
     taskName: String,

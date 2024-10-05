@@ -16,7 +16,11 @@ import androidx.compose.ui.unit.dp
 fun StatefulCounter(modifier: Modifier = Modifier) {
     // Define el estado para contar el número de vasos
     var count by rememberSaveable { mutableStateOf(0) }
-
+    StatelessCounter(
+        count,
+        { count++ },
+        modifier
+    )
     // Estructura de la interfaz de usuario
     Column(modifier = modifier.padding(16.dp)) {
         // Mostrar el conteo actual
