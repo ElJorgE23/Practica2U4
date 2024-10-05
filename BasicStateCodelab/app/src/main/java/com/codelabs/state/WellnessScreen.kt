@@ -13,34 +13,42 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
+fun WellnessScreen(modifier: Modifier = Modifier) {
+    Column(modifier = modifier.padding(16.dp)) {
+        StatefulCounter()
+        WellnessTasksList(
+            onCheckedTask = { task, isChecked ->
+                // Manejar el evento de marcado de la tarea aquí
+            },
+            onCloseTask = { task ->
+                // Manejar el evento de cierre de la tarea aquí
+            }
+        )
+    }
+}
+
+@Composable
 fun StatefulCounter(modifier: Modifier = Modifier) {
     // Define el estado para contar el número de vasos
     var count by rememberSaveable { mutableStateOf(0) }
-    StatelessCounter(
-        count,
-        { count++ },
-        modifier
-    )
-    // Estructura de la interfaz de usuario
-    Column(modifier = modifier.padding(16.dp)) {
-        // Mostrar el conteo actual
-        Text("You've had $count glasses.")
 
-        // Botón para añadir uno al conteo
-        Button(
-            onClick = { count++ },
-            enabled = count < 10, // Deshabilitar si se llega a 10
-            modifier = Modifier.padding(top = 8.dp)
-        ) {
-            Text("Add one")
-        }
+    // Mostrar el conteo actual
+    Text("You've had $count glasses.", modifier = modifier)
 
-        // Botón para reiniciar el conteo a cero
-        Button(
-            onClick = { count = 0 },
-            modifier = Modifier.padding(top = 8.dp)
-        ) {
-            Text("Clear count")
-        }
+    // Botón para añadir uno al conteo
+    Button(
+        onClick = { count++ },
+        enabled = count < 10, // Deshabilitar si se llega a 10
+        modifier = Modifier.padding(top = 8.dp)
+    ) {
+        Text("Add one")
+    }
+
+    // Botón para reiniciar el conteo a cero
+    Button(
+        onClick = { count = 0 },
+        modifier = Modifier.padding(top = 8.dp)
+    ) {
+        Text("Clear count")
     }
 }
