@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 
 class WellnessTask(
     val id: Int,
+    val name: String,
     val label: String,
     initialChecked: Boolean = false
 ) {

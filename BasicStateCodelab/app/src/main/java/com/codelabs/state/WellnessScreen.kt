@@ -1,41 +1,42 @@
-/*
- * Copyright 2022 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.codelabs.state
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.unit.dp
 
 @Composable
-fun WellnessScreen(
-    modifier: Modifier = Modifier,
-    wellnessViewModel: WellnessViewModel = viewModel()
-) {
-    Column(modifier = modifier) {
-        StatefulCounter()
+fun StatefulCounter(modifier: Modifier = Modifier) {
+    // Define el estado para contar el número de vasos
+    var count by rememberSaveable { mutableStateOf(0) }
 
-        WellnessTasksList(
-            list = wellnessViewModel.tasks,
-            onCheckedTask = { task, checked ->
-                wellnessViewModel.changeTaskChecked(task, checked)
-            },
-            onCloseTask = { task ->
-                wellnessViewModel.remove(task)
-            }
-        )
+    // Estructura de la interfaz de usuario
+    Column(modifier = modifier.padding(16.dp)) {
+        // Mostrar el conteo actual
+        Text("You've had $count glasses.")
+
+        // Botón para añadir uno al conteo
+        Button(
+            onClick = { count++ },
+            enabled = count < 10, // Deshabilitar si se llega a 10
+            modifier = Modifier.padding(top = 8.dp)
+        ) {
+            Text("Add one")
+        }
+
+        // Botón para reiniciar el conteo a cero
+        Button(
+            onClick = { count = 0 },
+            modifier = Modifier.padding(top = 8.dp)
+        ) {
+            Text("Clear count")
+        }
     }
 }
