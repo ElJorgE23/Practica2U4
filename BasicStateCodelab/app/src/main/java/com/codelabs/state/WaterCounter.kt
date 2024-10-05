@@ -14,8 +14,8 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun WaterCounter(modifier: Modifier = Modifier) {
-    // Cambia a var para que sea mutable
-    var count by rememberSaveable { mutableStateOf(0) } // Recuerda el estado entre recomposiciones
+    // Utiliza rememberSaveable para mantener el estado
+    var count by rememberSaveable { mutableStateOf(0) } // Cambia a var para que sea mutable
     Column(modifier = modifier.padding(16.dp)) {
         Text("You've had $count glasses.")
         Button(onClick = { count++ }, Modifier.padding(top = 8.dp)) {
