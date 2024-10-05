@@ -14,14 +14,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-
 @Composable
 fun WaterCounter(modifier: Modifier = Modifier) {
+    // Usando remember para crear un estado mutable
+    var count by remember { mutableStateOf(0) }
     Column(modifier = modifier.padding(16.dp)) {
-        var count by remember { mutableStateOf(0) }
-
-        Text("You've had $count glasses.")
-        Button(onClick = { count++ }, Modifier.padding(top = 8.dp)) {
+        // Mostrar el número de vasos consumidos solo si count es mayor a 0
+        if (count > 0) {
+            Text("You've had $count glasses.")
+        }
+        Button(
+            onClick = { count++ },
+            Modifier.padding(top = 8.dp),
+            enabled = count < 10 // Desactivar el botón si el conteo llega a 10
+        ) {
             Text("Add one")
         }
     }
